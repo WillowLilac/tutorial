@@ -27,17 +27,28 @@ const dummyBooks: BookToRead[] = [
 const App = () => {
   const [books,setBooks] = useState(dummyBooks);
 
+  //削除処理の関数
   const handleBookDelete = (id: number) => {
     const newBooks = books.filter((b) => b.id != id);
     setBooks(newBooks);
   };
+
+  //メモ変更処理の関数
+  const handleBookMemoChange = (id: number, memo: string) => {
+    const newBooks = books.map((b) => {
+      return b.id == id
+       ? {...b, memo: memo}
+       : b;
+    });
+    setBooks(newBooks);
+  }
 
   const BookRows = books.map((b) => {
     return (
       <BookRow
         book={b}
         key={b.id}
-        onMemoChange={(id, memo) => {}}
+        onMemoChange={(id, memo) => handleBookMemoChange(id,memo)}
         onDelete={(id) => handleBookDelete(id)}
       />
     );
