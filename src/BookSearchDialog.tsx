@@ -32,7 +32,8 @@ type BookSearchDialogProps = {
 };
 
 const BookSearchDialog = (props: BookSearchDialogProps) => {
-    const [books, setBooks] = useState([] as BookDescription[]);
+    const bookArray: BookDescription[] = [];
+    const [books, setBooks] = useState(bookArray);
     const [title, setTitle] = useState("");
     const [author, setAuthor] = useState("");
     const [isSearching, setIsSearching] = useState(false);
