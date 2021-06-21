@@ -99,7 +99,9 @@ const App = () => {
         isOpen={modalIsOpen}
         onRequestClose={handleModalClose}
         style={customStyles}
-      ></Modal>
+      >
+        <BookSearchDialog maxResults={20} onBookAdd={(b) => {}} />
+      </Modal>
     </div>
   );
 };
