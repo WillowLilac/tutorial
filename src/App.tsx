@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import Modal from "react-modal";
 import "./App.css";
 import { BookToRead } from "./BookToRead";
@@ -27,9 +27,24 @@ const customStyles = {
 
 const defaultBooks: BookToRead[] =[];
 
+//LocalStrageへのアクセスキー
+const APP_KEY = "react-hooks-tutorial"
+
 const App = () => {
   const [books,setBooks] = useState(defaultBooks);
   const [modalIsOpen, setModalIsOpen] = useState(false);
+
+  //初回レンダリング時のデータ取得処理
+  useEffect(() => {
+    const storedBooks = localStorage.getItem(APP_KEY);
+    if(storedBooks)
+      setBooks(JSON.parse(storedBooks));
+  },[])
+
+  //LocalStrageへの書き込み
+  useEffect(() => {
+    localStorage.setItem(APP_KEY,JSON.stringify(books));
+  },[books]);
 
   //削除処理の関数
   const handleBookDelete = (id: number) => {
