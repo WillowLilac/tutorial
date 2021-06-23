@@ -7,9 +7,9 @@ const buildSearchUrl = (title: string, author: string, maxResults: number): stri
     let url = "https://www.googleapis.com/books/v1/volumes?q=";
     const conditions: string[] = []
     if(title)
-        conditions.push(`intitle${title}`);
+        conditions.push(`intitle:${title}`);
     if(author)
-        conditions.push(`inauthor${author}`);
+        conditions.push(`inauthor:${author}`);
     return url + conditions.join('+') + `&maxResults=${maxResults}`;
 };
 
@@ -43,7 +43,7 @@ const BookSearchDialog = (props: BookSearchDialogProps) => {
             const url = buildSearchUrl(title, author, props.maxResults);
             fetch(url)
                 .then((res) => {
-                    return res.json;
+                    return res.json();
                 })
                 .then((json) => {
                     return extractBooks(json);
