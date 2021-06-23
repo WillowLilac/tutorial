@@ -48,14 +48,14 @@ const App = () => {
 
   //削除処理の関数
   const handleBookDelete = (id: number) => {
-    const newBooks = books.filter((b) => b.id != id);
+    const newBooks = books.filter((b) => b.id !== id);
     setBooks(newBooks);
   };
 
   //メモ変更処理の関数
   const handleBookMemoChange = (id: number, memo: string) => {
     const newBooks = books.map((b) => {
-      return b.id == id
+      return b.id === id
        ? {...b, memo: memo}
        : b;
     });
