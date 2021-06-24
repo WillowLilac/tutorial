@@ -1,4 +1,4 @@
-import React, {useRef} from "react";
+import React, {useRef, useState} from "react";
 import {BookDescription} from "./BookDescription";
 import BookSearchItem from "./BookSearchItem";
 import {useBookData} from "./useBookData";
@@ -11,12 +11,10 @@ type BookSearchDialogProps = {
 const BookSearchDialog = (props: BookSearchDialogProps) => {
     const titleRef = useRef<HTMLInputElement>(null);
     const authorRef = useRef<HTMLInputElement>(null);
+    const [title,setTietle] = useState("");
+    const [author,setAuthor] = useState("");
 
-    const [books, setIsSearching] = useBookData(
-        titleRef.current ? titleRef.current!.value : "",
-        authorRef.current ? authorRef.current!.value : "",
-        props.maxResults
-    )
+    const books = useBookData(title,author,props.maxResults);
 
     //検索ボタンを押したときの処理
     const handleSearchClick = () => {
@@ -25,7 +23,8 @@ const BookSearchDialog = (props: BookSearchDialogProps) => {
             return;
         }
         //検索実行
-        setIsSearching(true);
+        setTietle(titleRef.current!.value);
+        setAuthor(authorRef.current!.value);
     };
 
     //書籍追加イベントに対するコールバック
