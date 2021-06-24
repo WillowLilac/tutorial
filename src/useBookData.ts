@@ -25,9 +25,21 @@ const extractBooks = (json: any): BookDescription[] => {
     });
 };
 
-export const useBookData = () => {
+export const useBookData = (title: string, author: string, maxResults: number) => {
     const [books, setBooks] = useState([] as BookDescription[]);
     const [isSearching, setIsSearching] = useState(false);
 
-    
+    useEffect(() => {
+        if(isSearching) {
+            const url = buildSearchUrl(title,author,maxResults);
+            fetch(url)
+                .then((res) => {return res.json();})
+                .then((json) => {return extractBooks(json);})
+                .then((books) => {setBooks(books);})
+                .catch((err) => {console.error(err);});
+        }
+        setIsSearching(false);
+    },[isSearching,title,author,maxResults]);
+
+    return [books, setIsSearching] as const;
 }
